@@ -2,3 +2,5 @@
 .DS_Store
 /ffmpeg/build/
 /ffmpeg/ffmpeg-*/
+/ffmpeg/extra/ffmpeg/
+/ffmpeg/extra/gas-preprocessor/
