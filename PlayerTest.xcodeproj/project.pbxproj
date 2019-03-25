@@ -586,9 +586,9 @@
 			isa = PBXGroup;
 			children = (
 				B71BE5322244CDB8008A893B /* IJKAVPlayerLayerView.h */,
+				B71BE5352244CDB8008A893B /* IJKAVPlayerLayerView.m */,
 				B71BE5332244CDB8008A893B /* IJKAVMoviePlayerController.m */,
 				B71BE5342244CDB8008A893B /* IJKAVMoviePlayerController.h */,
-				B71BE5352244CDB8008A893B /* IJKAVPlayerLayerView.m */,
 			);
 			path = IJKAVMoviePlayerController;
 			sourceTree = "<group>";
@@ -597,13 +597,13 @@
 			isa = PBXGroup;
 			children = (
 				B71BE5372244CDB8008A893B /* IJKFFMonitor.h */,
+				B71BE5CD2244CDB8008A893B /* IJKFFMonitor.m */,
+				B71BE5CC2244CDB8008A893B /* IJKFFMoviePlayerDef.h */,
 				B71BE5C92244CDB8008A893B /* IJKFFMoviePlayerDef.m */,
 				B71BE5CA2244CDB8008A893B /* IJKFFMoviePlayerController.h */,
-				B71BE5CB2244CDB8008A893B /* IJKFFOptions.m */,
-				B71BE5CC2244CDB8008A893B /* IJKFFMoviePlayerDef.h */,
-				B71BE5CD2244CDB8008A893B /* IJKFFMonitor.m */,
 				B71BE5CE2244CDB8008A893B /* IJKFFMoviePlayerController.m */,
 				B71BE5CF2244CDB8008A893B /* IJKFFOptions.h */,
+				B71BE5CB2244CDB8008A893B /* IJKFFOptions.m */,
 				B71BE5D02244CDB8008A893B /* IJKSDLGLViewProtocol.h */,
 			);
 			path = IJKFFMoviePlayerController;
@@ -636,8 +636,8 @@
 		B71BE5F72244CE0F008A893B /* IJKMPMoviePlayerController */ = {
 			isa = PBXGroup;
 			children = (
-				B71BE5F82244CE0F008A893B /* IJKMPMoviePlayerController.m */,
 				B71BE5F92244CE0F008A893B /* IJKMPMoviePlayerController.h */,
+				B71BE5F82244CE0F008A893B /* IJKMPMoviePlayerController.m */,
 			);
 			path = IJKMPMoviePlayerController;
 			sourceTree = "<group>";
