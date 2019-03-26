@@ -385,13 +385,24 @@ typedef NS_ENUM(NSInteger, IJKSDLGLViewApplicationState) {
     }
 
     glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
-    glViewport(0, 0, _backingWidth, _backingHeight);
+    glViewport(0, 0, _backingWidth * 0.5, _backingHeight);
 
     if (!IJK_GLES2_Renderer_renderOverlay(_renderer, overlay))
         ALOGE("[EGL] IJK_GLES2_render failed\n");
 
     glBindRenderbuffer(GL_RENDERBUFFER, _renderbuffer);
     [_context presentRenderbuffer:GL_RENDERBUFFER];
+    
+    
+////    //  >>>>>>>>>>>>>>>>
+    glViewport(_backingWidth * 0.5, 0, _backingWidth * 0.5, _backingHeight);
+
+    if (!IJK_GLES2_Renderer_renderOverlay(_renderer, overlay))
+        ALOGE("[EGL] IJK_GLES2_render failed\n");
+
+    glBindRenderbuffer(GL_RENDERBUFFER, _renderbuffer);
+    [_context presentRenderbuffer:GL_RENDERBUFFER];
+////    //  <<<<<<<<<<<<<<<<
 
     int64_t current = (int64_t)SDL_GetTickHR();
     int64_t delta   = (current > _lastFrameTime) ? current - _lastFrameTime : 0;
