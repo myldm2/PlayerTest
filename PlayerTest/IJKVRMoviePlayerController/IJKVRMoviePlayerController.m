@@ -1,27 +1,4 @@
-/*
- * IJKFFMoviePlayerController.m
- *
- * Copyright (c) 2013 Bilibili
- * Copyright (c) 2013 Zhang Rui <bbcallen@gmail.com>
- *
- * This file is part of ijkPlayer.
- *
- * ijkPlayer is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * ijkPlayer is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with ijkPlayer; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
- */
-
-#import "IJKFFMoviePlayerController.h"
+#import "IJKVRMoviePlayerController.h"
 
 #import <UIKit/UIKit.h>
 #import "IJKSDLHudViewController.h"
@@ -34,16 +11,17 @@
 #import "ijkioapplication.h"
 #include "string.h"
 #import "IJKWeakHolder.h"
+#import "IJKSDLGLVRView.h"
 
-static const char *kIJKFFRequiredFFmpegVersion = "ff3.4--ijk0.8.7--20180103--001";
+static const char *kIJKVRRequiredFFmpegVersion = "ff3.4--ijk0.8.7--20180103--001";
 
-@interface IJKFFMoviePlayerController()
+@interface IJKVRMoviePlayerController()
 
 @end
 
-@implementation IJKFFMoviePlayerController {
+@implementation IJKVRMoviePlayerController {
     IjkMediaPlayer *_mediaPlayer;
-    IJKSDLGLView *_glView;
+    IJKSDLGLVRView *_glView;
     IJKFFMoviePlayerMessagePool *_msgPool;
     NSString *_urlString;
 
@@ -99,7 +77,7 @@ static const char *kIJKFFRequiredFFmpegVersion = "ff3.4--ijk0.8.7--20180103--001
 #define FFP_IO_STAT_STEP (50 * 1024)
 
 // as an example
-void IJKFFIOStatDebugCallback(const char *url, int type, int bytes)
+void IJKVRIOStatDebugCallback(const char *url, int type, int bytes)
 {
     static int64_t s_ff_io_stat_check_points = 0;
     static int64_t s_ff_io_stat_bytes = 0;
@@ -120,12 +98,12 @@ void IJKFFIOStatDebugCallback(const char *url, int type, int bytes)
     }
 }
 
-void IJKFFIOStatRegister(void (*cb)(const char *url, int type, int bytes))
+void IJKVRIOStatRegister(void (*cb)(const char *url, int type, int bytes))
 {
     ijkmp_io_stat_register(cb);
 }
 
-void IJKFFIOStatCompleteDebugCallback(const char *url,
+void IJKVRIOStatCompleteDebugCallback(const char *url,
                                       int64_t read_bytes, int64_t total_size,
                                       int64_t elpased_time, int64_t total_duration)
 {
@@ -139,7 +117,7 @@ void IJKFFIOStatCompleteDebugCallback(const char *url,
           url, read_bytes, total_size, elpased_time, total_duration);
 }
 
-void IJKFFIOStatCompleteRegister(void (*cb)(const char *url,
+void IJKVRIOStatCompleteRegister(void (*cb)(const char *url,
                                             int64_t read_bytes, int64_t total_size,
                                             int64_t elpased_time, int64_t total_duration))
 {
@@ -176,13 +154,13 @@ void IJKFFIOStatCompleteRegister(void (*cb)(const char *url,
         ijkmp_global_init();
         ijkmp_global_set_inject_callback(ijkff_inject_callback);
 
-        [IJKFFMoviePlayerController checkIfFFmpegVersionMatch:NO];
+        [IJKVRMoviePlayerController checkIfFFmpegVersionMatch:NO];
 
         if (options == nil)
             options = [IJKFFOptions optionsByDefault];
 
-        // IJKFFIOStatRegister(IJKFFIOStatDebugCallback);
-        // IJKFFIOStatCompleteRegister(IJKFFIOStatCompleteDebugCallback);
+        // IJKVRIOStatRegister(IJKVRIOStatDebugCallback);
+        // IJKVRIOStatCompleteRegister(IJKVRIOStatCompleteDebugCallback);
 
         // init fields
         _scalingMode = IJKMPMovieScalingModeAspectFit;
@@ -195,7 +173,7 @@ void IJKFFIOStatCompleteRegister(void (*cb)(const char *url,
         _urlString = aUrlString;
 
         // init player
-        _mediaPlayer = ijkmp_ios_create(media_player_msg_loop);
+        _mediaPlayer = ijkmp_ios_create(vr_media_player_msg_loop);
         _msgPool = [[IJKFFMoviePlayerMessagePool alloc] init];
         IJKWeakHolder *weakHolder = [IJKWeakHolder new];
         weakHolder.object = self;
@@ -206,7 +184,7 @@ void IJKFFIOStatCompleteRegister(void (*cb)(const char *url,
         ijkmp_set_option_int(_mediaPlayer, IJKMP_OPT_CATEGORY_PLAYER, "start-on-prepared", _shouldAutoplay ? 1 : 0);
 
         // init video sink
-        _glView = [[IJKSDLGLView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        _glView = [[IJKSDLGLVRView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
         _glView.isThirdGLView = NO;
         _view = _glView;
         _hudViewController = [[IJKSDLHudViewController alloc] init];
@@ -233,9 +211,9 @@ void IJKFFIOStatCompleteRegister(void (*cb)(const char *url,
         ijkmp_ios_set_glview(_mediaPlayer, _glView);
         ijkmp_set_option(_mediaPlayer, IJKMP_OPT_CATEGORY_PLAYER, "overlay-format", "fcc-_es2");
 #ifdef DEBUG
-        [IJKFFMoviePlayerController setLogLevel:k_IJK_LOG_DEBUG];
+        [IJKVRMoviePlayerController setLogLevel:k_IJK_LOG_DEBUG];
 #else
-        [IJKFFMoviePlayerController setLogLevel:k_IJK_LOG_SILENT];
+        [IJKVRMoviePlayerController setLogLevel:k_IJK_LOG_SILENT];
 #endif
         // init audio sink
         [[IJKAudioKit sharedInstance] setupAudioSession];
@@ -280,13 +258,13 @@ void IJKFFIOStatCompleteRegister(void (*cb)(const char *url,
         ijkmp_global_init();
         ijkmp_global_set_inject_callback(ijkff_inject_callback);
 
-        [IJKFFMoviePlayerController checkIfFFmpegVersionMatch:NO];
+        [IJKVRMoviePlayerController checkIfFFmpegVersionMatch:NO];
 
         if (options == nil)
             options = [IJKFFOptions optionsByDefault];
 
-        // IJKFFIOStatRegister(IJKFFIOStatDebugCallback);
-        // IJKFFIOStatCompleteRegister(IJKFFIOStatCompleteDebugCallback);
+        // IJKVRIOStatRegister(IJKVRIOStatDebugCallback);
+        // IJKVRIOStatCompleteRegister(IJKVRIOStatCompleteDebugCallback);
 
         // init fields
         _scalingMode = IJKMPMovieScalingModeAspectFit;
@@ -299,7 +277,7 @@ void IJKFFIOStatCompleteRegister(void (*cb)(const char *url,
         _urlString = aUrlString;
 
         // init player
-        _mediaPlayer = ijkmp_ios_create(media_player_msg_loop);
+        _mediaPlayer = ijkmp_ios_create(vr_media_player_msg_loop);
         _msgPool = [[IJKFFMoviePlayerMessagePool alloc] init];
         IJKWeakHolder *weakHolder = [IJKWeakHolder new];
         weakHolder.object = self;
@@ -311,7 +289,7 @@ void IJKFFIOStatCompleteRegister(void (*cb)(const char *url,
 
         self.shouldShowHudView = options.showHudView;
         glView.isThirdGLView = YES;
-        _view = _glView = (IJKSDLGLView *)glView;
+        _view = _glView = (IJKSDLGLVRView *)glView;
         _hudViewController = [[IJKSDLHudViewController alloc] init];
         [_hudViewController setRect:_glView.frame];
         _shouldShowHudView = NO;
@@ -336,9 +314,9 @@ void IJKFFIOStatCompleteRegister(void (*cb)(const char *url,
 
         ijkmp_set_option(_mediaPlayer, IJKMP_OPT_CATEGORY_PLAYER, "overlay-format", "fcc-_es2");
 #ifdef DEBUG
-        [IJKFFMoviePlayerController setLogLevel:k_IJK_LOG_DEBUG];
+        [IJKVRMoviePlayerController setLogLevel:k_IJK_LOG_DEBUG];
 #else
-        [IJKFFMoviePlayerController setLogLevel:k_IJK_LOG_SILENT];
+        [IJKVRMoviePlayerController setLogLevel:k_IJK_LOG_SILENT];
 #endif
         // init audio sink
         [[IJKAudioKit sharedInstance] setupAudioSession];
@@ -513,7 +491,7 @@ inline static int getPlayerOption(IJKFFOptionCategory category)
 + (BOOL)checkIfFFmpegVersionMatch:(BOOL)showAlert;
 {
     const char *actualVersion = av_version_info();
-    const char *expectVersion = kIJKFFRequiredFFmpegVersion;
+    const char *expectVersion = kIJKVRRequiredFFmpegVersion;
     if (0 == strcmp(actualVersion, expectVersion)) {
         return YES;
     } else {
@@ -565,7 +543,7 @@ inline static int getPlayerOption(IJKFFOptionCategory category)
     [self performSelectorInBackground:@selector(shutdownWaitStop:) withObject:self];
 }
 
-- (void)shutdownWaitStop:(IJKFFMoviePlayerController *) mySelf
+- (void)shutdownWaitStop:(IJKVRMoviePlayerController *) mySelf
 {
     if (!_mediaPlayer)
         return;
@@ -576,7 +554,7 @@ inline static int getPlayerOption(IJKFFOptionCategory category)
     [self performSelectorOnMainThread:@selector(shutdownClose:) withObject:self waitUntilDone:YES];
 }
 
-- (void)shutdownClose:(IJKFFMoviePlayerController *) mySelf
+- (void)shutdownClose:(IJKVRMoviePlayerController *) mySelf
 {
     if (!_mediaPlayer)
         return;
@@ -587,7 +565,7 @@ inline static int getPlayerOption(IJKFFOptionCategory category)
     _liveOpenDelegate       = nil;
     _nativeInvokeDelegate   = nil;
 
-    __unused id weakPlayer = (__bridge_transfer IJKFFMoviePlayerController*)ijkmp_set_weak_thiz(_mediaPlayer, NULL);
+    __unused id weakPlayer = (__bridge_transfer IJKVRMoviePlayerController*)ijkmp_set_weak_thiz(_mediaPlayer, NULL);
     __unused id weakHolder = (__bridge_transfer IJKWeakHolder*)ijkmp_set_inject_opaque(_mediaPlayer, NULL);
     __unused id weakijkHolder = (__bridge_transfer IJKWeakHolder*)ijkmp_set_ijkio_inject_opaque(_mediaPlayer, NULL);
     ijkmp_dec_ref_p(&_mediaPlayer);
@@ -1324,15 +1302,15 @@ inline static void fillMetaInternal(NSMutableDictionary *meta, IjkMediaMeta *raw
     return [_msgPool obtain];
 }
 
-inline static IJKFFMoviePlayerController *ffplayerRetain(void *arg) {
-    return (__bridge_transfer IJKFFMoviePlayerController *) arg;
+inline static IJKVRMoviePlayerController *vrplayerRetain(void *arg) {
+    return (__bridge_transfer IJKVRMoviePlayerController *) arg;
 }
 
-int media_player_msg_loop(void* arg)
+int vr_media_player_msg_loop(void* arg)
 {
     @autoreleasepool {
         IjkMediaPlayer *mp = (IjkMediaPlayer*)arg;
-        __weak IJKFFMoviePlayerController *ffpController = ffplayerRetain(ijkmp_set_weak_thiz(mp, NULL));
+        __weak IJKVRMoviePlayerController *ffpController = vrplayerRetain(ijkmp_set_weak_thiz(mp, NULL));
         while (ffpController) {
             @autoreleasepool {
                 IJKFFMoviePlayerMessage *msg = [ffpController obtainMessage];
@@ -1357,7 +1335,7 @@ int media_player_msg_loop(void* arg)
 
 #pragma mark av_format_control_message
 
-static int onInjectIOControl(IJKFFMoviePlayerController *mpc, id<IJKMediaUrlOpenDelegate> delegate, int type, void *data, size_t data_size)
+static int onInjectIOControl(IJKVRMoviePlayerController *mpc, id<IJKMediaUrlOpenDelegate> delegate, int type, void *data, size_t data_size)
 {
     AVAppIOControl *realData = data;
     assert(realData);
@@ -1393,7 +1371,7 @@ static int onInjectIOControl(IJKFFMoviePlayerController *mpc, id<IJKMediaUrlOpen
     return 0;
 }
 
-static int onInjectTcpIOControl(IJKFFMoviePlayerController *mpc, id<IJKMediaUrlOpenDelegate> delegate, int type, void *data, size_t data_size)
+static int onInjectTcpIOControl(IJKVRMoviePlayerController *mpc, id<IJKMediaUrlOpenDelegate> delegate, int type, void *data, size_t data_size)
 {
     AVAppTcpIOControl *realData = data;
     assert(realData);
@@ -1432,7 +1410,7 @@ static int onInjectTcpIOControl(IJKFFMoviePlayerController *mpc, id<IJKMediaUrlO
     return 0;
 }
 
-static int onInjectAsyncStatistic(IJKFFMoviePlayerController *mpc, int type, void *data, size_t data_size)
+static int onInjectAsyncStatistic(IJKVRMoviePlayerController *mpc, int type, void *data, size_t data_size)
 {
     AVAppAsyncStatistic *realData = data;
     assert(realData);
@@ -1442,7 +1420,7 @@ static int onInjectAsyncStatistic(IJKFFMoviePlayerController *mpc, int type, voi
     return 0;
 }
 
-static int onInectIJKIOStatistic(IJKFFMoviePlayerController *mpc, int type, void *data, size_t data_size)
+static int onInectIJKIOStatistic(IJKVRMoviePlayerController *mpc, int type, void *data, size_t data_size)
 {
     IjkIOAppCacheStatistic *realData = data;
     assert(realData);
@@ -1463,7 +1441,7 @@ static int64_t calculateElapsed(int64_t begin, int64_t end)
     return end - begin;
 }
 
-static int onInjectOnHttpEvent(IJKFFMoviePlayerController *mpc, int type, void *data, size_t data_size)
+static int onInjectOnHttpEvent(IJKVRMoviePlayerController *mpc, int type, void *data, size_t data_size)
 {
     AVAppHttpEvent *realData = data;
     assert(realData);
@@ -1552,7 +1530,7 @@ static int onInjectOnHttpEvent(IJKFFMoviePlayerController *mpc, int type, void *
 static int ijkff_inject_callback(void *opaque, int message, void *data, size_t data_size)
 {
     IJKWeakHolder *weakHolder = (__bridge IJKWeakHolder*)opaque;
-    IJKFFMoviePlayerController *mpc = weakHolder.object;
+    IJKVRMoviePlayerController *mpc = weakHolder.object;
     if (!mpc)
         return 0;
 
@@ -1721,7 +1699,7 @@ static int ijkff_inject_callback(void *opaque, int message, void *data, size_t d
     int reason = [[[notification userInfo] valueForKey:AVAudioSessionInterruptionTypeKey] intValue];
     switch (reason) {
         case AVAudioSessionInterruptionTypeBegan: {
-            NSLog(@"IJKFFMoviePlayerController:audioSessionInterrupt: begin\n");
+            NSLog(@"IJKVRMoviePlayerController:audioSessionInterrupt: begin\n");
             switch (self.playbackState) {
                 case IJKMPMoviePlaybackStatePaused:
                 case IJKMPMoviePlaybackStateStopped:
@@ -1736,7 +1714,7 @@ static int ijkff_inject_callback(void *opaque, int message, void *data, size_t d
             break;
         }
         case AVAudioSessionInterruptionTypeEnded: {
-            NSLog(@"IJKFFMoviePlayerController:audioSessionInterrupt: end\n");
+            NSLog(@"IJKVRMoviePlayerController:audioSessionInterrupt: end\n");
             [[IJKAudioKit sharedInstance] setActive:YES];
             if (_playingBeforeInterruption) {
                 [self play];
@@ -1748,17 +1726,17 @@ static int ijkff_inject_callback(void *opaque, int message, void *data, size_t d
 
 - (void)applicationWillEnterForeground
 {
-    NSLog(@"IJKFFMoviePlayerController:applicationWillEnterForeground: %d", (int)[UIApplication sharedApplication].applicationState);
+    NSLog(@"IJKVRMoviePlayerController:applicationWillEnterForeground: %d", (int)[UIApplication sharedApplication].applicationState);
 }
 
 - (void)applicationDidBecomeActive
 {
-    NSLog(@"IJKFFMoviePlayerController:applicationDidBecomeActive: %d", (int)[UIApplication sharedApplication].applicationState);
+    NSLog(@"IJKVRMoviePlayerController:applicationDidBecomeActive: %d", (int)[UIApplication sharedApplication].applicationState);
 }
 
 - (void)applicationWillResignActive
 {
-    NSLog(@"IJKFFMoviePlayerController:applicationWillResignActive: %d", (int)[UIApplication sharedApplication].applicationState);
+    NSLog(@"IJKVRMoviePlayerController:applicationWillResignActive: %d", (int)[UIApplication sharedApplication].applicationState);
     dispatch_async(dispatch_get_main_queue(), ^{
         if (_pauseInBackground) {
             [self pause];
@@ -1768,7 +1746,7 @@ static int ijkff_inject_callback(void *opaque, int message, void *data, size_t d
 
 - (void)applicationDidEnterBackground
 {
-    NSLog(@"IJKFFMoviePlayerController:applicationDidEnterBackground: %d", (int)[UIApplication sharedApplication].applicationState);
+    NSLog(@"IJKVRMoviePlayerController:applicationDidEnterBackground: %d", (int)[UIApplication sharedApplication].applicationState);
     dispatch_async(dispatch_get_main_queue(), ^{
         if (_pauseInBackground) {
             [self pause];
@@ -1778,7 +1756,7 @@ static int ijkff_inject_callback(void *opaque, int message, void *data, size_t d
 
 - (void)applicationWillTerminate
 {
-    NSLog(@"IJKFFMoviePlayerController:applicationWillTerminate: %d", (int)[UIApplication sharedApplication].applicationState);
+    NSLog(@"IJKVRMoviePlayerController:applicationWillTerminate: %d", (int)[UIApplication sharedApplication].applicationState);
     dispatch_async(dispatch_get_main_queue(), ^{
         if (_pauseInBackground) {
             [self pause];

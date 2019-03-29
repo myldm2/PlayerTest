@@ -64,6 +64,14 @@ typedef struct IJK_GLES2_Renderer
 
     GLfloat vertices[8];
     int     vertices_changed;
+    
+//    GLfloat vr_texcoords[12*4+4];
+//
+//    GLfloat vr_vertices[12*6+6];
+    GLfloat vr_texcoords[8];
+    
+    GLfloat vr_vertices[12];
+    int     vr_vertices_changed;
 
     int     format;
     int     gravity;

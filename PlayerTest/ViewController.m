@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "IJKMoviePlayerViewController.h"
+#import "IJKVRPlayerViewController.h"
 
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -50,6 +51,11 @@
         NSURL   *url  = [NSURL URLWithString:@"http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/gear1/prog_index.m3u8"];
         
         [self.navigationController presentViewController:[[IJKVideoViewController alloc] initWithURL:url] animated:YES completion:^{}];
+    } else if (indexPath.row == 1)
+    {
+        NSURL   *url  = [NSURL URLWithString:@"http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/gear1/prog_index.m3u8"];
+        
+        [self.navigationController presentViewController:[[IJKVRPlayerViewController alloc] initWithURL:url] animated:YES completion:^{}];
     }
 }
 
