@@ -46,10 +46,10 @@ void makeSphereVertices(IJK_GLES2_Renderer *renderer) {
     
     renderer->vr_vertices[0] = -1.0f;
     renderer->vr_vertices[1] = -1.0f;
-    renderer->vr_vertices[2] = -3.0f;  //
+    renderer->vr_vertices[2] = 1.0f;  //
     renderer->vr_vertices[3] =  1.0f;
     renderer->vr_vertices[4] = -1.0f;
-    renderer->vr_vertices[5] = -3.0f;  //
+    renderer->vr_vertices[5] = 1.0f;  //
     renderer->vr_vertices[6] = -1.0f;
     renderer->vr_vertices[7] =  1.0f;
     renderer->vr_vertices[8] =  1.0f;  //

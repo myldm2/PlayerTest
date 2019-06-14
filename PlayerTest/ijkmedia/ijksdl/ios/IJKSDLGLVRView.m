@@ -376,9 +376,9 @@ typedef NS_ENUM(NSInteger, IJKSDLGLViewApplicationState) {
     if (!IJK_GLES2_VR_Renderer_renderOverlay(_renderer, overlay))
         ALOGE("[EGL] IJK_GLES2_render failed\n");
     
-//    glViewport(_backingWidth * 0.5, 0, _backingWidth, _backingHeight);
-//    if (!IJK_GLES2_VR_Renderer_renderOverlay(_renderer, overlay))
-//        ALOGE("[EGL] IJK_GLES2_render failed\n");
+    glViewport(_backingWidth * 0.5, 0, _backingWidth, _backingHeight);
+    if (!IJK_GLES2_VR_Renderer_renderOverlay(_renderer, overlay))
+        ALOGE("[EGL] IJK_GLES2_render failed\n");
     
     glBindRenderbuffer(GL_RENDERBUFFER, _renderbuffer);
     [_context presentRenderbuffer:GL_RENDERBUFFER];
