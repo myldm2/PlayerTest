@@ -114,6 +114,8 @@
 		B71BE97A2244D446008A893B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B71BE9792244D446008A893B /* QuartzCore.framework */; };
 		B71BE97C2244D45A008A893B /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B71BE97B2244D459008A893B /* VideoToolbox.framework */; };
 		B71BE97E2244D4B2008A893B /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B71BE97D2244D4B2008A893B /* libz.1.2.5.tbd */; };
+		B723F3F422CF2CD100F8F3AD /* esUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = B723F3F322CF2CD100F8F3AD /* esUtil.c */; };
+		B723F3F822CF301F00F8F3AD /* FileWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = B723F3F722CF301F00F8F3AD /* FileWrapper.m */; };
 		B758D4B32249BBD600542584 /* IJKMediaControl.m in Sources */ = {isa = PBXBuildFile; fileRef = B758D4B02249BBD500542584 /* IJKMediaControl.m */; };
 		B758D4B42249BBD600542584 /* IJKMoviePlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B758D4B12249BBD600542584 /* IJKMoviePlayerViewController.m */; };
 		B758D4B52249BBD600542584 /* IJKMoviePlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B758D4B22249BBD600542584 /* IJKMoviePlayerViewController.xib */; };
@@ -359,6 +361,10 @@
 		B71BE9792244D446008A893B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B71BE97B2244D459008A893B /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		B71BE97D2244D4B2008A893B /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
+		B723F3F222CF2CD100F8F3AD /* esUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = esUtil.h; sourceTree = "<group>"; };
+		B723F3F322CF2CD100F8F3AD /* esUtil.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = esUtil.c; sourceTree = "<group>"; };
+		B723F3F622CF301F00F8F3AD /* FileWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileWrapper.h; sourceTree = "<group>"; };
+		B723F3F722CF301F00F8F3AD /* FileWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileWrapper.m; sourceTree = "<group>"; };
 		B758D4AE2249BBD500542584 /* IJKMediaControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IJKMediaControl.h; sourceTree = "<group>"; };
 		B758D4AF2249BBD500542584 /* IJKMoviePlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IJKMoviePlayerViewController.h; sourceTree = "<group>"; };
 		B758D4B02249BBD500542584 /* IJKMediaControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IJKMediaControl.m; sourceTree = "<group>"; };
@@ -580,6 +586,8 @@
 		B71BE1772244AF00008A893B /* PlayerTest */ = {
 			isa = PBXGroup;
 			children = (
+				B723F3F522CF2FFA00F8F3AD /* FileWrapper.h */,
+				B723F3F122CF2A5400F8F3AD /* ESUtil */,
 				B79E6CE02248A06D0075B3FB /* ffmpeg */,
 				B71BE87B2244D125008A893B /* ijkmedia */,
 				B71BE5F72244CE0F008A893B /* IJKMPMoviePlayerController */,
@@ -976,6 +984,24 @@
 				B71BE9672244D3E6008A893B /* AudioToolbox.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B723F3F122CF2A5400F8F3AD /* ESUtil */ = {
+			isa = PBXGroup;
+			children = (
+				B723F3F222CF2CD100F8F3AD /* esUtil.h */,
+				B723F3F322CF2CD100F8F3AD /* esUtil.c */,
+			);
+			path = ESUtil;
+			sourceTree = "<group>";
+		};
+		B723F3F522CF2FFA00F8F3AD /* FileWrapper.h */ = {
+			isa = PBXGroup;
+			children = (
+				B723F3F622CF301F00F8F3AD /* FileWrapper.h */,
+				B723F3F722CF301F00F8F3AD /* FileWrapper.m */,
+			);
+			path = FileWrapper.h;
 			sourceTree = "<group>";
 		};
 		B758D4B62249BD6D00542584 /* Misc */ = {
@@ -1431,6 +1457,7 @@
 				B71BE95A2244D126008A893B /* ijksdl_vout_overlay_videotoolbox.m in Sources */,
 				B71BE9622244D126008A893B /* ijksdl_egl.c in Sources */,
 				B71BE94C2244D126008A893B /* shader.c in Sources */,
+				B723F3F422CF2CD100F8F3AD /* esUtil.c in Sources */,
 				B71BE9302244D126008A893B /* IJKVideoToolBoxAsync.m in Sources */,
 				B71BE5E42244CDB9008A893B /* IJKAVPlayerLayerView.m in Sources */,
 				B71BE92A2244D125008A893B /* ijkiocache.c in Sources */,
@@ -1476,6 +1503,7 @@
 				B71BE5F62244CDB9008A893B /* IJKAudioKit.m in Sources */,
 				B71BE9242244D125008A893B /* ijkioapplication.c in Sources */,
 				B71BE91E2244D125008A893B /* ijkasync.c in Sources */,
+				B723F3F822CF301F00F8F3AD /* FileWrapper.m in Sources */,
 				B71BE5F32244CDB9008A893B /* IJKMediaPlayback.m in Sources */,
 				B71BE9282244D125008A893B /* allformats.c in Sources */,
 				B71BE92B2244D125008A893B /* ffpipenode_ffplay_vdec.c in Sources */,
