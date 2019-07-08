@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B706879722D31C7800DD353F /* esShader.c in Sources */ = {isa = PBXBuildFile; fileRef = B706879622D31C7800DD353F /* esShader.c */; };
+		B706879922D31F5300DD353F /* Hello_Triangle.c in Sources */ = {isa = PBXBuildFile; fileRef = B706879822D31F5300DD353F /* Hello_Triangle.c */; };
+		B706879D22D3359800DD353F /* TriangleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B706879C22D3359800DD353F /* TriangleViewController.m */; };
 		B71BE17A2244AF00008A893B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B71BE1792244AF00008A893B /* AppDelegate.m */; };
 		B71BE17D2244AF00008A893B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B71BE17C2244AF00008A893B /* ViewController.m */; };
 		B71BE1802244AF00008A893B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B71BE17E2244AF00008A893B /* Main.storyboard */; };
@@ -154,6 +157,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B706879622D31C7800DD353F /* esShader.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = esShader.c; sourceTree = "<group>"; };
+		B706879822D31F5300DD353F /* Hello_Triangle.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Hello_Triangle.c; sourceTree = "<group>"; };
+		B706879B22D3359800DD353F /* TriangleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TriangleViewController.h; sourceTree = "<group>"; };
+		B706879C22D3359800DD353F /* TriangleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TriangleViewController.m; sourceTree = "<group>"; };
 		B71BE1752244AF00008A893B /* PlayerTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlayerTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B71BE1782244AF00008A893B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B71BE1792244AF00008A893B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -562,6 +569,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B706879A22D3356400DD353F /* TriangleViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B706879B22D3359800DD353F /* TriangleViewController.h */,
+				B706879C22D3359800DD353F /* TriangleViewController.m */,
+			);
+			path = TriangleViewController;
+			sourceTree = "<group>";
+		};
 		B71BE16C2244AF00008A893B = {
 			isa = PBXGroup;
 			children = (
@@ -586,6 +602,7 @@
 		B71BE1772244AF00008A893B /* PlayerTest */ = {
 			isa = PBXGroup;
 			children = (
+				B706879A22D3356400DD353F /* TriangleViewController */,
 				B723F3F522CF2FFA00F8F3AD /* FileWrapper.h */,
 				B723F3F122CF2A5400F8F3AD /* ESUtil */,
 				B79E6CE02248A06D0075B3FB /* ffmpeg */,
@@ -991,6 +1008,8 @@
 			children = (
 				B723F3F222CF2CD100F8F3AD /* esUtil.h */,
 				B723F3F322CF2CD100F8F3AD /* esUtil.c */,
+				B706879622D31C7800DD353F /* esShader.c */,
+				B706879822D31F5300DD353F /* Hello_Triangle.c */,
 			);
 			path = ESUtil;
 			sourceTree = "<group>";
@@ -1428,6 +1447,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B706879922D31F5300DD353F /* Hello_Triangle.c in Sources */,
 				B71BE93E2244D126008A893B /* ijkutils.c in Sources */,
 				B71BE9552244D126008A893B /* ijksdl_error.c in Sources */,
 				B71BE93F2244D126008A893B /* ijkthreadpool.c in Sources */,
@@ -1478,12 +1498,14 @@
 				B71BE91F2244D125008A893B /* ijkiomanager.c in Sources */,
 				B71BE9292244D125008A893B /* ijklivehook.c in Sources */,
 				B71BE93A2244D126008A893B /* ijkstl.cpp in Sources */,
+				B706879722D31C7800DD353F /* esShader.c in Sources */,
 				B71BE5EC2244CDB9008A893B /* IJKFFOptions.m in Sources */,
 				B7862188224B4305001A4038 /* vr_renderer.c in Sources */,
 				B71BE5EE2244CDB9008A893B /* IJKFFMoviePlayerController.m in Sources */,
 				B71BE9512244D126008A893B /* rgb.fsh.c in Sources */,
 				B71BE5F42244CDB9008A893B /* IJKDeviceModel.m in Sources */,
 				B71BE9432244D126008A893B /* ijksdl_thread.c in Sources */,
+				B706879D22D3359800DD353F /* TriangleViewController.m in Sources */,
 				B71BE9462244D126008A893B /* common.c in Sources */,
 				B71BE95D2244D126008A893B /* ijksdl_thread_ios.m in Sources */,
 				B71BE1882244AF01008A893B /* main.m in Sources */,

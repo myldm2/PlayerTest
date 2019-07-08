@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "IJKMoviePlayerViewController.h"
 #import "IJKVRPlayerViewController.h"
+#import "TriangleViewController.h"
 
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -36,12 +37,22 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
-    cell.textLabel.text = @"test";
+    if (indexPath.row == 0)
+    {
+        cell.textLabel.text = @"test1";
+    } else if (indexPath.row == 1)
+    {
+        cell.textLabel.text = @"test1";
+    } else if (indexPath.row == 2)
+    {
+        cell.textLabel.text = @"三角形";
+    }
+    
     return cell;
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return 3;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -56,6 +67,10 @@
         NSURL   *url  = [NSURL URLWithString:@"http://devimages.apple.com.edgekey.net/streaming/examples/bipbop_4x3/gear1/prog_index.m3u8"];
         
         [self.navigationController presentViewController:[[IJKVRPlayerViewController alloc] initWithURL:url] animated:YES completion:^{}];
+    } else if (indexPath.row == 2)
+    {
+        TriangleViewController* vc = [[TriangleViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:true];
     }
 }
 
